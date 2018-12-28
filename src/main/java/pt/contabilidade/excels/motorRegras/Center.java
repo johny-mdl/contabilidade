@@ -1,7 +1,7 @@
 package pt.contabilidade.excels.motorRegras;
 
 public enum Center {
-	COST, PROFIT;
+	COST, PROFIT, DIVERS;
 
 	public static Center getCenter(String center) {
 		switch (center) {
@@ -9,6 +9,8 @@ public enum Center {
 			return COST;
 		case "profit":
 			return PROFIT;
+		case "divers":
+			return DIVERS;
 		default:
 			return null;
 		}

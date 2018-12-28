@@ -2,9 +2,9 @@ package pt.contabilidade.excels.input;
 
 import java.util.Date;
 
-public class Input {
-	private InputName input_name;
+public abstract class Input {
 
+	private InputName input_name;
 	private String reference;
 	private String account;
 	private String document_Number;

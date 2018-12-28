@@ -33,7 +33,7 @@ public class ExcelUtils {
 			return "";
 		}
 		if (cell.getCellTypeEnum().equals(CellType.NUMERIC)) {
-			return String.valueOf(cell.getNumericCellValue()).trim();
+			return String.format("%.0f", cell.getNumericCellValue()).trim();
 		} else if (cell.getCellTypeEnum().equals(CellType.STRING)) {
 			return cell.getStringCellValue().trim();
 		} else {

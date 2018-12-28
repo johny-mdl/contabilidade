@@ -51,7 +51,7 @@ public class MotorRegras extends Excel<Regra> {
 			try {
 				if (row != null && row.getCell(1) != null) {
 					regras.add(new Regra(InputName.getName(ExcelUtils.getString(row.getCell(1))),
-							ExcelUtils.getString(row.getCell(2)), ExcelUtils.getString(row.getCell(3)),
+							ExcelUtils.getString(row.getCell(2)), ExcelUtils.transformToString(row.getCell(3)),
 							ExcelUtils.getString(row.getCell(4)), ExcelUtils.transformToString(row.getCell(5)),
 							ExcelUtils.transformToString(row.getCell(6)),
 							Center.getCenter(ExcelUtils.transformToString(row.getCell(7))),
@@ -68,15 +68,20 @@ public class MotorRegras extends Excel<Regra> {
 	}
 
 	public Regra findRegra(final Input input) {
-		return rows.stream().filter(regra -> regra.getMatching_text().contains(input.getMatchingText())
-				&& regra.getText().equals(input.getInput_name())).findAny().orElse(null);
+		for (Regra regra : rows) {
+			if (regra.getText() == null || regra.getMatching_text() == null) {
+				continue;
+			}
+			if (regra.getText().equals(input.getInput_name())
+					&& regra.getMatching_text().contains(input.getMatchingText())) {
+				return regra;
+			}
+		}
+		return null;
 
-		// for (Regra regra : rows) {
-		// if (regra.getMatching_text().contains(inputMatchingText)) {
-		// return regra;
-		// }
-		// }
-		// return null;
+		// return rows.stream().filter(regra ->
+		// regra.getMatching_text().contains(input.getMatchingText())
+		// && regra.getText().equals(input.getInput_name())).findAny().orElse(null);
 
 	}
 

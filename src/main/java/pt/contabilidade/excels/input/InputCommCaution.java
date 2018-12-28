@@ -7,8 +7,8 @@ public class InputCommCaution extends Input {
 	private String wbs;
 	private String cost_center;
 
-	public InputCommCaution(String gl_account, String reference, String doc_type, String doc_number, Date doc_date,
-			Date posting_date, Double amount_doc, Double amount_local_curr, String text, String assignement, String wbs,
+	public InputCommCaution(String assignement, String reference, String gl_account, String doc_number, String doc_type,
+			Date doc_date, Date posting_date, Double amount_local_curr, Double amount_doc, String text, String wbs,
 			String cost_center) {
 		super(InputName.COMM_CAUTION, gl_account, reference, doc_type, doc_number, doc_date, posting_date, amount_doc,
 				amount_local_curr, text, assignement);

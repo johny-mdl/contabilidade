@@ -1,7 +1,7 @@
 package pt.contabilidade.excels.output;
 
 import pt.contabilidade.excels.input.Input;
-import pt.contabilidade.excels.motorRegras.Center;
+import pt.contabilidade.excels.input.InputCommCaution;
 import pt.contabilidade.excels.motorRegras.Regra;
 
 public class Transaction {
@@ -32,12 +32,25 @@ public class Transaction {
 		debit.setDebit_Amount(String.valueOf(input.getAmount_in_doc_curr()));
 		debit.setTax_Code("IX"); // TODO tirar este martelanço, isto é para quando o IVA esta separado
 
-		if (regra.getCenter().equals(Center.COST)) {
+		switch (regra.getCenter()) {
+		case COST:
 			debit.setCost_Center(regra.getPc());
-		} else if (regra.getCenter().equals(Center.PROFIT)) {
+			break;
+		case PROFIT:
 			debit.setProfit_Center(regra.getPc());
+			break;
+		case DIVERS:
+			if (input instanceof InputCommCaution) {
+				debit.setCost_Center(((InputCommCaution) input).getCost_center());
+			}
+			break;
+		default:
+			break;
 		}
 
+		if (input instanceof InputCommCaution) {
+			debit.setWBS_Element(((InputCommCaution) input).getWbs());
+		}
 		debit.setLine_Item_Text(text);
 		debit.setAllocation(alloc);
 
@@ -51,6 +64,10 @@ public class Transaction {
 		credit.setGL_Account(input.getAccount());
 		credit.setDocument_Date(input.getDocument_Date().toString());
 		credit.setCredit_Amount(String.valueOf(input.getAmount_in_doc_curr()));
+
+		if (input instanceof InputCommCaution) {
+			credit.setWBS_Element(((InputCommCaution) input).getWbs());
+		}
 
 		credit.setLine_Item_Text(text);
 		credit.setAllocation(alloc);
